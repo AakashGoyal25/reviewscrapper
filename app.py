@@ -7,7 +7,10 @@ from urllib.request import urlopen as uReq
 app = Flask(__name__)
 
 @app.route('/',methods=['GET'])  # route to display the home page
-@cross_origin()
+@cross_origin() # It is used when we deploy on cloud, as we don't where we deploy it in Singapore, Mumbai, US etc..
+# If we don't mention @cross_origin then it will not be able to show results from other locations.
+# For local execution, it is not required.
+
 def homePage():
     return render_template("index.html")
 
@@ -29,7 +32,7 @@ def index():
             prodRes = requests.get(productLink)
             prodRes.encoding='utf-8'
             prod_html = bs(prodRes.text, "html.parser")
-            print(prod_html)
+            # print(prod_html)
             commentboxes = prod_html.find_all('div', {'class': "_16PBlm"})
 
             filename = searchString + ".csv"
